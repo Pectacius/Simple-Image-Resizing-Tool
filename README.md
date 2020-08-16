@@ -40,4 +40,5 @@ valid_file_types = (("Bitmap files", "*.bmp*"),
 
 #### Note
 ![File](info/selectfile.PNG)
+
 Use the dropdown to change the type of file being searched when selecting an image to be opened
