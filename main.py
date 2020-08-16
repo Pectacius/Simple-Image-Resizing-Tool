@@ -61,6 +61,8 @@ class Editor(Tk):
         self.loaded_img = Image.open(file_name)
         self.img_x.configure(text=f"Loaded X Size: {self.loaded_img.size[0]}")
         self.img_y.configure(text=f"Loaded Y Size: {self.loaded_img.size[1]}")
+        self.resize_x.configure(text="Resized X Size: ")
+        self.resize_y.configure(text="Resized Y Size: ")
         self.edited_img = None
 
     def save_file(self) -> None:
