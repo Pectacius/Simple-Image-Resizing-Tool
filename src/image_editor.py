@@ -1,7 +1,7 @@
-from typing import Union
-
-import PIL
+from PIL import Image
 from tkinter import IntVar
+
+import custom_errors
 
 
 class ImageEditor:
@@ -22,7 +22,7 @@ class ImageEditor:
         self.mode.set(1)
 
     def open_file(self, filename: str) -> None:
-        self.loaded_img = PIL.Image.open(filename)
+        self.loaded_img = Image.open(filename)
         self.edited_img = None
 
     def resize(self, x_ratio: str, y_ratio: str):
@@ -42,9 +42,4 @@ class ImageEditor:
             self.edited_img = self.loaded_img.resize((round(self.loaded_img.size[0] * x_value),
                                                       round(self.loaded_img.size[1] * y_value)))
         else:
-            raise NoImageError()
-
-
-class NoImageError(Exception):
-    """represents no loaded image"""
-    pass
+            raise custom_errors.NoImageError()

@@ -1,10 +1,10 @@
-from PIL import Image
 import tkinter as tk
 from tkinter import filedialog
 
 import color_frame as cf
 import image_editor as edit
 import popup as pop
+import resize_frame as rf
 
 
 class EditorGUI(tk.Tk):
@@ -22,13 +22,10 @@ class EditorGUI(tk.Tk):
         super().__init__()
         self.editor = edit.ImageEditor()
 
-        validate = (self.register(lambda p: EditorGUI.is_number(p) or p == ""))
-
         tool_frame = tk.Frame(self, highlightbackground="grey", highlightthickness=1)
         tool_frame.place(x=10, y=10, width=480, height=40)
 
-        resize_frame = tk.Frame(self, highlightbackground="grey", highlightthickness=1)
-        resize_frame.place(x=10, y=100, width=480, height=100)
+        self.resize_frame = rf.Resize(self.editor)
 
         color_replace_frame = tk.Frame(self, highlightbackground="grey", highlightthickness=1)
         color_replace_frame.place(x=10, y=210, width=480, height=200)
@@ -45,37 +42,11 @@ class EditorGUI(tk.Tk):
         save = tk.Button(tool_frame, text="Save", width=10, command=self.save_file)
         save.grid(row=0, column=4, padx=20, pady=5)
 
-        resize = tk.Button(resize_frame, text="Resize", command=self.resize)
-        resize.place(x=380, y=60, width=80)
-
         loaded = tk.Button(tool_frame, text="View Loaded", width=10, command=self.view_loaded)
         loaded.grid(row=0, column=1, padx=20, pady=5)
 
         edited = tk.Button(tool_frame, text="View Edited", width=10, command=self.view_edited)
         edited.grid(row=0, column=2, padx=20, pady=5)
-
-        resize_label = tk.Label(resize_frame, text="Resize Tool", borderwidth=2, relief="ridge")
-        resize_label.place(x=0, y=0)
-
-        self.x_input = tk.Entry(resize_frame, validate="all", validatecommand=(validate, '%P'))
-        self.y_input = tk.Entry(resize_frame, validate="all", validatecommand=(validate, '%P'))
-        self.x_input.place(x=380, y=10, width=80)
-        self.y_input.place(x=380, y=35, width=80)
-
-        x_input_label = tk.Label(resize_frame, text="X Ratio")
-        y_input_label = tk.Label(resize_frame, text="Y Ratio")
-        x_input_label.place(x=330, y=10, width=40)
-        y_input_label.place(x=330, y=35, width=40)
-
-        self.img_x = tk.Label(resize_frame, text="Loaded X Size: ")
-        self.img_x.place(x=10, y=30, width=100)
-        self.img_y = tk.Label(resize_frame, text="Loaded Y Size: ")
-        self.img_y.place(x=10, y=60, width=100)
-
-        self.resize_x = tk.Label(resize_frame, text="Resized X Size: ")
-        self.resize_x.place(x=150, y=30, width=100)
-        self.resize_y = tk.Label(resize_frame, text="Resized Y Size: ")
-        self.resize_y.place(x=150, y=60, width=100)
 
         color_label = tk.Label(color_replace_frame, text="Replace Colors Tool", borderwidth=2, relief="ridge")
         color_label.place(x=0, y=0, width=110)
@@ -90,7 +61,7 @@ class EditorGUI(tk.Tk):
         match_description.pack()
 
         for text, mode in self.REPLACE_MODES:
-            b = tk.Radiobutton(mode_panel, text=text, variable=self.mode, value=mode, justify=tk.LEFT)
+            b = tk.Radiobutton(mode_panel, text=text, variable=self.editor.mode, value=mode, justify=tk.LEFT)
             b.pack(anchor=tk.W)
 
         replace = tk.Button(color_replace_frame, text="Replace")
@@ -120,10 +91,10 @@ class EditorGUI(tk.Tk):
     def load_img(self, file_name) -> None:
         """Loads file and updates file information"""
         self.editor.open_file(file_name)
-        self.img_x.configure(text=f"Loaded X Size: {self.editor.loaded_img.size[0]}")
-        self.img_y.configure(text=f"Loaded Y Size: {self.editor.loaded_img.size[1]}")
-        self.resize_x.configure(text="Resized X Size: ")
-        self.resize_y.configure(text="Resized Y Size: ")
+        self.resize_frame.img_x.configure(text=f"Loaded X Size: {self.editor.loaded_img.size[0]}")
+        self.resize_frame.img_y.configure(text=f"Loaded Y Size: {self.editor.loaded_img.size[1]}")
+        self.resize_frame.resize_x.configure(text="Resized X Size: ")
+        self.resize_frame.resize_y.configure(text="Resized Y Size: ")
 
     def save_file(self) -> None:
         """Saves edited image if any, creates error popup if none"""
@@ -148,34 +119,10 @@ class EditorGUI(tk.Tk):
         else:
             pop.Popup("No Edited Image Found")
 
-    def resize(self) -> None:
-        """Converts input ratios if possible and resizes loaded image using the ratio. Also updates image dimension
-         information. If resize not possible error popup displayed"""
-
-        try:
-            self.editor.resize(self.x_input.get(), self.y_input.get())
-        except ValueError:
-            pop.Popup("Not A Valid Input, Only Numbers Allowed")
-        except edit.NoImageError:
-            pop.Popup("No Image Loaded")
-        else:
-            self.resize_x.configure(text=f"Resized X Size: {self.editor.edited_img.size[0]}")
-            self.resize_y.configure(text=f"Resized Y Size: {self.editor.edited_img.size[1]}")
-            pop.Popup("Success")
-
-    @staticmethod
-    def is_number(value) -> bool:
-        """Return true if value can be cast to float, else return false"""
-        try:
-            float(value)
-            return True
-        except ValueError:
-            return False
-
 
 if __name__ == '__main__':
     window = EditorGUI()
     window.title("Image Resizer")
-    window.geometry("500x500")
+    window.geometry("500x450")
     window.resizable(0, 0)
     window.mainloop()

@@ -10,7 +10,7 @@ class ColorFrame(tk.Frame):
 
         validate = (self.register(lambda p: str.isdigit(p) or p == ""))
 
-        tk.Label(self, text=title, borderwidth=2, relief="ridge").place(x=0, y=0)
+        tk.Label(self, text=title + " (RGBA)", borderwidth=2, relief="ridge").place(x=0, y=0)
 
         self.red = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
         self.red.place(x=60, y=40, width=80)
