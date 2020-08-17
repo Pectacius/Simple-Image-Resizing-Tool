@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
 
-import color_frame as cf
 import image_editor as edit
 import replace_frame as rpf
 import resize_frame as rf
@@ -41,7 +40,7 @@ class EditorGUI(tk.Tk):
 
 if __name__ == '__main__':
     window = EditorGUI()
-    window.title("Image Resizer")
+    window.title("Image Editor")
     window.geometry("500x450")
     window.resizable(0, 0)
     window.mainloop()

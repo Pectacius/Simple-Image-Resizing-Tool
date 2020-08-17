@@ -19,7 +19,7 @@ class Resize(tk.Frame):
         resize.place(x=380, y=60, width=80)
 
         clear = tk.Button(self, text="Clear", command=self.clear)
-        clear.place(x=280, y=60, width=80)
+        clear.place(x=290, y=60, width=80)
 
         self.x_input = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
         self.y_input = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
