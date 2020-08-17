@@ -13,17 +13,27 @@ class ColorFrame(tk.Frame):
         tk.Label(self, text=title + " (RGBA)", borderwidth=2, relief="ridge").place(x=0, y=0)
 
         self.red = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
-        self.red.place(x=60, y=40, width=80)
-        tk.Label(self, text="RED").place(x=10, y=40)
+        self.red.place(x=60, y=30, width=80)
+        tk.Label(self, text="RED").place(x=10, y=30)
 
         self.green = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
-        self.green.place(x=60, y=70, width=80)
-        tk.Label(self, text="GREEN").place(x=10, y=70)
+        self.green.place(x=60, y=60, width=80)
+        tk.Label(self, text="GREEN").place(x=10, y=60)
 
         self.blue = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
-        self.blue.place(x=60, y=100, width=80)
-        tk.Label(self, text="BLUE").place(x=10, y=100)
+        self.blue.place(x=60, y=90, width=80)
+        tk.Label(self, text="BLUE").place(x=10, y=90)
 
         self.alpha = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
-        self.alpha.place(x=60, y=130, width=80)
-        tk.Label(self, text="ALPHA").place(x=10, y=130)
+        self.alpha.place(x=60, y=120, width=80)
+        tk.Label(self, text="ALPHA").place(x=10, y=120)
+
+        clear = tk.Button(self, text="Clear", command=self.clear)
+        clear.place(x=60, y=145, width=80)
+
+    def clear(self) -> None:
+        """Clears all entries"""
+        self.red.delete(0, 'end')
+        self.green.delete(0, 'end')
+        self.blue.delete(0, 'end')
+        self.alpha.delete(0, 'end')

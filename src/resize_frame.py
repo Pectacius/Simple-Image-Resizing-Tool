@@ -18,6 +18,9 @@ class Resize(tk.Frame):
         resize = tk.Button(self, text="Resize", command=self.resize)
         resize.place(x=380, y=60, width=80)
 
+        clear = tk.Button(self, text="Clear", command=self.clear)
+        clear.place(x=280, y=60, width=80)
+
         self.x_input = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
         self.y_input = tk.Entry(self, validate="all", validatecommand=(validate, '%P'))
         self.x_input.place(x=380, y=10, width=80)
@@ -51,6 +54,11 @@ class Resize(tk.Frame):
             self.resize_x.configure(text=f"Resized X Size: {self.editor.edited_img.size[0]}")
             self.resize_y.configure(text=f"Resized Y Size: {self.editor.edited_img.size[1]}")
             pop.Popup("Success")
+
+    def clear(self) -> None:
+        """Clears entries from entry inputs"""
+        self.x_input.delete(0, 'end')
+        self.y_input.delete(0, 'end')
 
     @staticmethod
     def is_number(value) -> bool:
