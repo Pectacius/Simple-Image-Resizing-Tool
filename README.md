@@ -73,7 +73,7 @@ Looking at the table of all the colors in the picture
 
 One must replace `(230,230,230,255)` and `(255,255,255,255)` with `(0,0,0,255)`, which produces
 
-<img src="info/color_replace_sample_result.png" alt="drawing" width="400"/>
+<img src="info/color_replace_sample_result.png" alt="drawing" width="300"/>
 
 This tool is very nice to change background colors and transparencies!
 
