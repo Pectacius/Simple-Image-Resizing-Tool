@@ -1,6 +1,7 @@
 # Image Resizer and Color Replacer
 
 Simple GUI that allows for the resizing of various image formats, and adding and removing colors from images
+Intially built to edit thumbnails for a [calculator project](https://github.com/Pectacius/Calculus-Matrix-Calculator)
 
 ![Application](info/app.PNG)
 
